@@ -1,3 +1,8 @@
+if ENV['CI'] == '1'
+  require 'coveralls'
+  Coveralls.wear_merged!
+end
+
 $:.unshift File.expand_path("../../lib", __FILE__)
 
 ENV['RACK_ENV'] = 'test'

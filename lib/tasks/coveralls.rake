@@ -1,4 +1,4 @@
-  require 'coveralls'
+  # require 'coveralls'
   # require 'SimpleCov'
   require 'coveralls/rake/task'
   Coveralls::RakeTask.new
@@ -9,7 +9,7 @@
     #   add_filter "/test/"
     # end
     
-    Coveralls.wear_merged!
+    # Coveralls.wear_merged!
 
     Rake::Task["test:each"].invoke
     Rake::Task["coveralls:push"].invoke
