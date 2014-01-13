@@ -1,6 +1,5 @@
 if ENV['CI'] == '1'
-  require 'coveralls'
-  Coveralls.wear_merged!
+  require 'simplecov'
 end
 
 $:.unshift File.expand_path("../../lib", __FILE__)
