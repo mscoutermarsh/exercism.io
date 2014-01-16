@@ -1,11 +1,9 @@
-  # require 'coveralls'
-  # require 'SimpleCov'
+  require 'coveralls'
+  require 'SimpleCov'
   require 'coveralls/rake/task'
   Coveralls::RakeTask.new
   task :test_with_coverage do
-    require 'simplecov'
-    require 'coveralls'
-    Coveralls.wear_merged!
+    # Coveralls.wear_merged!
     # SimpleCov.formatter = Coveralls::SimpleCov::Formatter
     # SimpleCov.command_name 'MiniTest'
     # SimpleCov.start do
@@ -14,6 +12,6 @@
     
     # Coveralls.wear_merged!
 
-    Rake::Task["test:each"].invoke
+    Rake::Task["test"].invoke
     Rake::Task["coveralls:push"].invoke
   end
