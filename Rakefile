@@ -1,5 +1,11 @@
 ENV['NEWRELIC_ENABLE'] = "false"
 
+if ENV['CI'] == '1'
+  require 'simplecov'
+  require 'coveralls'
+  Coveralls.wear_merged!
+end
+
 $:.unshift File.expand_path("./../lib", __FILE__)
 Dir.glob("lib/tasks/*.rake").each { |r| import r }
 
