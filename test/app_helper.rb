@@ -1,3 +1,9 @@
+if ENV['CI'] == '1'
+  require 'simplecov'
+  require 'coveralls'
+  Coveralls.wear_merged!
+end
+
 require './test/integration_helper'
 require './test/approval_helper'
 
