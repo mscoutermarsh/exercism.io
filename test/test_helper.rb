@@ -1,5 +1,5 @@
 $:.unshift File.expand_path("../../lib", __FILE__)
-# require 'SimpleCov'
+require 'SimpleCov'
 
 ENV['RACK_ENV'] = 'test'
 
