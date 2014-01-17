@@ -1,4 +1,4 @@
-require 'SimpleCov'
+require 'simplecov'
 require './test/integration_helper'
 require './test/approval_helper'
 
