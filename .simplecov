@@ -1,3 +1,3 @@
 require 'coveralls'
-SimpleCov.use_merging true
+SimpleCov.formatter = Coveralls::SimpleCov::Formatter
 SimpleCov.start
