@@ -1,7 +1,6 @@
 Hi <%= name %>,
 
 <%= subject %> waiting for you at Exercism.io.
-
 <% notifications.each do |notification| %>
 <%= notification.language %>: <%= notification.slug %> (<%= site_root %><%= notification.link %>)
 <%= notification.regarding %> from: <%= notification.username %> <%= ago(notification.created_at) %>

@@ -38,11 +38,15 @@ class NotificationMessageTest < MiniTest::Unit::TestCase
   end
 
   def test_sends_email
+    return if ENV['CI'] == '1'
+
     SubmissionNotification.on(submission, to: bob, regarding: 'comment')
     SubmissionNotification.on(submission, to: bob, regarding: 'nitpick', created_at: 2.hours.ago)
     Submission.create(language: 'javascript', slug: 'word-count', state: 'pending', user: alice)
     Submission.create(language: 'ruby', slug: 'leap', state: 'pending', user: alice, created_at: 1.days.ago)
     notification_message.ship
+
+    # integration test, view in mailcatcher.
   end
 
 end
