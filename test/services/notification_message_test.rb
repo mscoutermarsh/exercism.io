@@ -11,25 +11,22 @@ class NotificationMessageTest < MiniTest::Unit::TestCase
 
   def setup
     super
-    @alice = User.create(username: 'alice')
-    @bob = User.create(username: 'bob', mastery: ['ruby'], email: 'test@exercism.io')
+    @alice = User.create(username: 'alice', email: 'test@exercism.io')
+    @bob = User.create(username: 'bob')
     @submission = Submission.create(language: 'ruby', slug: 'word-count', state: 'pending', user: alice)
+    Hack::UpdatesUserExercise.new(alice.id, 'ruby', 'word-count').update
+    @submission.reload
   end
 
   def notification_message
-    @notification_message ||= NotificationMessage.new(user: bob, intercept_emails: true)
+    @notification_message ||= NotificationMessage.new(user: alice, intercept_emails: true)
   end
 
   def test_subject
-    SubmissionNotification.on(submission, to: bob, regarding: 'dogs')
-    SubmissionNotification.on(submission, to: bob, regarding: 'puppies')
-    assert_equal 'You have 2 notifications', notification_message.subject
-  end
+    Notification.on(submission, to: alice, regarding: 'dogs')
+    Notification.on(submission, to: alice, regarding: 'puppies')
 
-  def test_gets_only_own_notifications
-    SubmissionNotification.on(submission, to: alice, regarding: 'dogs')
-    SubmissionNotification.on(submission, to: bob, regarding: 'dogs')
-    assert_equal 'You have 1 notification', notification_message.subject
+    assert_equal 'You have 2 notifications', notification_message.subject
   end
 
   def test_doesnt_send_empty_email
@@ -40,10 +37,10 @@ class NotificationMessageTest < MiniTest::Unit::TestCase
   def test_sends_email
     return if ENV['CI'] == '1'
 
-    SubmissionNotification.on(submission, to: bob, regarding: 'comment')
-    SubmissionNotification.on(submission, to: bob, regarding: 'nitpick', created_at: 2.hours.ago)
-    Submission.create(language: 'javascript', slug: 'word-count', state: 'pending', user: alice)
-    Submission.create(language: 'ruby', slug: 'leap', state: 'pending', user: alice, created_at: 1.days.ago)
+    Notification.on(submission, to: alice, regarding: 'comment')
+    Notification.on(submission, to: alice, regarding: 'nitpick', created_at: 2.hours.ago)
+    Submission.create(language: 'javascript', slug: 'word-count', state: 'pending', user: bob)
+    Submission.create(language: 'ruby', slug: 'leap', state: 'pending', user: bob, created_at: 1.days.ago)
     notification_message.ship
 
     # integration test, view in mailcatcher.

@@ -56,7 +56,7 @@ class NotificationMessage < Message
   end
 
   def notifications
-    @user.notifications.unread.by_recency
+    @user.notifications.on_submissions.unread.recent.by_recency
   end
 
 end
