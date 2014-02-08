@@ -14,7 +14,7 @@ namespace :digest do
 
     user_ids.each do |user_id|
       user = User.find(user_id)
-      NotificationMessage.new(user: user, intercept_emails: true).ship if user.email
+      NotificationMessage.new(user: user).ship if user.email
     end
   end
 end
